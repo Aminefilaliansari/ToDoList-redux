@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function ListTDL() {
   const dataListTD = useSelector((data) => data);
-  console.log("dataListTD", dataListTD);
+  console.log("dataListTD :", dataListTD);
 
   return (
     <div id="ListTDL">
