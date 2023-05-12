@@ -1,23 +1,86 @@
-import { useState } from "react";
 import { Input, Button } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, SaveFilled } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { addTodoAction } from "../redux/actions";
+import {
+  changeinputAction,
+  addTodoAction,
+  updateEtatAction,
+  updateTodoAction,
+  addCountNewAction,
+} from "../redux/actions";
 
 export default function InputTDL() {
-
   const dispatch = useDispatch();
-  const dataListTD = useSelector((data) => data);
-  const [tache,setTache]= useState();
+  /*
+  const selectorValue = useSelector((data) => data.input);
+  const selectorEtat = useSelector((data) => data.etatUpdate);
+  const selectorCount = useSelector((data) => data.count);
+  */
 
-  function handleAdd_Todo () {
-    dispatch(addTodoAction({id:(dataListTD.length+1),title:tache,checked:false}))
+  const {
+    input: selectorValue,
+    etatUpdate: selectorEtat,
+    count: selectorCount,
+  } = useSelector((data) => data);
+
+
+  function handleAdd_Todo() {
+    if (selectorValue) {
+      dispatch(
+        addTodoAction({
+          id: Date.now(),
+          title: selectorValue,
+          checked: false,
+        })
+      );
+      dispatch(changeinputAction(""));
+      dispatch(addCountNewAction(selectorCount.New + 1));
+    }
+  }
+
+  function handleChange_input(e) {
+    dispatch(changeinputAction(e.target.value));
+  }
+
+  function handleSave() {
+    const obj2 = { updated: false, idtache: selectorEtat.idtache };
+  
+    dispatch(updateEtatAction(obj2));
+    dispatch(changeinputAction(""));
+
+    const obj = {
+      id: selectorEtat.idtache,
+      title: selectorValue,
+      checked: false,
+    };
+
+    dispatch(updateTodoAction(obj));
   }
 
   return (
     <div className="p-10 flex">
-      <Input placeholder="input" onKeyPress={(e) => setTache(e.target.value)}/>
-      <Button type="default" icon={<PlusOutlined />} onClick={handleAdd_Todo}/>
+      <Input
+        className="mr-5"
+        placeholder="tache"
+        value={selectorValue}
+        onChange={handleChange_input}
+      />
+
+      {!selectorEtat.updated ? (
+        <Button
+          className="inline-flex justify-center items-center bg-sky-400 text-white"
+          type="default"
+          icon={<PlusOutlined />}
+          onClick={handleAdd_Todo}
+        />
+      ) : (
+        <Button
+          className="inline-flex justify-center items-center"
+          type="default"
+          icon={<SaveFilled />}
+          onClick={handleSave}
+        />
+      )}
     </div>
   );
 }
