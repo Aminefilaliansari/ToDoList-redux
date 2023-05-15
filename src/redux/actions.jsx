@@ -34,3 +34,6 @@ export const updateCheckedAction = (value) => {
   return {type : "UPDATE_CHECKED" , payload: value}
 };
 
+export const addCountResultsAction = (value) => {
+  return {type : "ADDCOUNT_RESULTS" , payload: value}
+};

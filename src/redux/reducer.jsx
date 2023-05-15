@@ -2,7 +2,7 @@ const initialeState = {
   input: "",
   etatUpdate: { updated: false, idtache: 0 },
   todolist: [],
-  count: { New: 0, Done: 0, Delete: 0 },
+  count: { New: 0, Done: 0, Delete: 0, Results : 0},
 };
 
 const reducer = (state = initialeState, action) => {
@@ -85,6 +85,12 @@ const reducer = (state = initialeState, action) => {
         ...state,
         count: { ...state.count, Done: action.payload },
       };
+
+      case "ADDCOUNT_RESULTS" :
+        return {
+          ...state,
+          count: { ...state.count, Results: action.payload },
+        };  
 
     default:
       return state;

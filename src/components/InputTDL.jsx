@@ -16,13 +16,11 @@ export default function InputTDL() {
   const selectorEtat = useSelector((data) => data.etatUpdate);
   const selectorCount = useSelector((data) => data.count);
   */
-
   const {
     input: selectorValue,
     etatUpdate: selectorEtat,
     count: selectorCount,
   } = useSelector((data) => data);
-
 
   function handleAdd_Todo() {
     if (selectorValue) {
@@ -44,7 +42,7 @@ export default function InputTDL() {
 
   function handleSave() {
     const obj2 = { updated: false, idtache: selectorEtat.idtache };
-  
+
     dispatch(updateEtatAction(obj2));
     dispatch(changeinputAction(""));
 
