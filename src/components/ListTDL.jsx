@@ -2,12 +2,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Checkbox } from "antd";
 import { DeleteOutlined, EditFilled } from "@ant-design/icons";
 import {
-  addCountDeleteAction,
+  updateCountDeleteAction,
   changeinputAction,
   deleteTodoAction,
   updateEtatAction,
   updateCheckedAction,
-  addCountDoneAction,
+  updateCountDoneAction,
 } from "../redux/actions";
 
 export default function ListTDL() {
@@ -15,18 +15,18 @@ export default function ListTDL() {
   const { todolist: selectorListTD, count: selectorCount } = useSelector(
     (data) => data
   );
-  console.log("selectorListTD :", selectorListTD);
+  console.log("selectorListTD:", selectorListTD);
 
   function handleDelete(e) {
     dispatch(deleteTodoAction(e.currentTarget.value));
-    dispatch(addCountDeleteAction(selectorCount.Delete + 1));
+    dispatch(updateCountDeleteAction('inc'));
 
     const itemDeleted = selectorListTD.find(
       (item) => item.id === parseInt(e.currentTarget.value)
     );
 
     if (itemDeleted.checked === true) {
-      dispatch(addCountDoneAction(selectorCount.Done - 1));
+      dispatch(updateCountDoneAction('dec'));
     }
   }
 
@@ -41,9 +41,9 @@ export default function ListTDL() {
 
   function handleChecked(e) {
     if (e.target.checked === true) {
-      dispatch(addCountDoneAction(selectorCount.Done + 1));
+      dispatch(updateCountDoneAction('inc'));
     } else {
-      dispatch(addCountDoneAction(selectorCount.Done - 1));
+      dispatch(updateCountDoneAction('dec'));
     }
     dispatch(
       updateCheckedAction({ id: e.target.value, checked: e.target.checked })
@@ -58,7 +58,6 @@ export default function ListTDL() {
         </span>
       </div>
       <div id="ListTDL">
-        {console.log("selectorListTD ?", selectorListTD.length === 0)}
         {selectorListTD.length !== 0 ? (
           selectorListTD.map((item, index) => (
             <div

@@ -6,7 +6,7 @@ import {
   addTodoAction,
   updateEtatAction,
   updateTodoAction,
-  addCountNewAction,
+  updateCountNewAction,
 } from "../redux/actions";
 
 export default function InputTDL() {
@@ -19,10 +19,9 @@ export default function InputTDL() {
   const {
     input: selectorValue,
     etatUpdate: selectorEtat,
-    count: selectorCount,
   } = useSelector((data) => data);
 
-  function handleAdd_Todo() {
+  function handleAddTodo() {
     if (selectorValue) {
       dispatch(
         addTodoAction({
@@ -32,11 +31,11 @@ export default function InputTDL() {
         })
       );
       dispatch(changeinputAction(""));
-      dispatch(addCountNewAction(selectorCount.New + 1));
+      dispatch(updateCountNewAction('inc'));
     }
   }
 
-  function handleChange_input(e) {
+  function handleChangeInput(e) {
     dispatch(changeinputAction(e.target.value));
   }
 
@@ -61,7 +60,7 @@ export default function InputTDL() {
         className="mr-5"
         placeholder="tache"
         value={selectorValue}
-        onChange={handleChange_input}
+        onChange={handleChangeInput}
       />
 
       {!selectorEtat.updated ? (
@@ -69,7 +68,7 @@ export default function InputTDL() {
           className="inline-flex justify-center items-center bg-sky-400 text-white"
           type="default"
           icon={<PlusOutlined />}
-          onClick={handleAdd_Todo}
+          onClick={handleAddTodo}
         />
       ) : (
         <Button

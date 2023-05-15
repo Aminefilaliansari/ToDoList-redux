@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 
-function HeaderTDL({ title }) {
+const HeaderTDL = ({ title }) => {
   const selectorCount = useSelector((data) => data.count);
-  console.log("selectorCount", selectorCount);
+  console.log("selectorCount:", selectorCount);
 
   return (
     <div>

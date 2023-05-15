@@ -18,16 +18,16 @@ export const updateEtatAction = (etat) => {
   return { type: "UPDATE_ETAT", payload: etat };
 };
 
-export const addCountNewAction = (value) => {
-  return {type : "ADDCOUNT_NEW" , payload: value}
+export const updateCountNewAction = (payload) => {
+  return {type : "UPDATE_COUNT_NEW" , payload }
 };
 
-export const addCountDoneAction = (value) => {
-  return {type : "ADDCOUNT_DONE" , payload: value}
+export const updateCountDoneAction = (payload) => {
+  return {type : "UPDATE_COUNT_DONE" , payload }
 };
 
-export const addCountDeleteAction = (value) => {
-  return {type : "ADDCOUNT_DELETE" , payload: value}
+export const updateCountDeleteAction = (value) => {
+  return {type : "UPDATE_COUNT_DELETE" , payload: value}
 };
 
 export const updateCheckedAction = (value) => {

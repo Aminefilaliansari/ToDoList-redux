@@ -68,22 +68,22 @@ const reducer = (state = initialeState, action) => {
         }),
       } 
 
-    case "ADDCOUNT_NEW":
+    case "UPDATE_COUNT_NEW":
       return {
         ...state,
-        count: { ...state.count, New: action.payload },
+        count: { ...state.count, New: action.payload === 'inc' ? state.count.New + 1 : state.count.New - 1  },
       };
 
-    case "ADDCOUNT_DELETE":
+    case "UPDATE_COUNT_DELETE":
       return {
         ...state,
-        count: { ...state.count, Delete: action.payload },
+        count: { ...state.count, Delete: action.payload === 'inc' ? state.count.Delete + 1 : state.count.Delete - 1 },
       };
 
-    case "ADDCOUNT_DONE" :
+    case "UPDATE_COUNT_DONE" :
       return {
         ...state,
-        count: { ...state.count, Done: action.payload },
+        count: { ...state.count, Done: action.payload === 'inc' ? state.count.Done + 1 : state.count.Done - 1 },
       };
 
       case "ADDCOUNT_RESULTS" :
