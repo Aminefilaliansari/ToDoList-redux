@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Checkbox } from "antd";
 import { DeleteOutlined, EditFilled } from "@ant-design/icons";
@@ -9,26 +8,26 @@ import {
   updateEtatAction,
   updateCheckedAction,
   addCountDoneAction,
-  addCountResultsAction,
 } from "../redux/actions";
 
 export default function ListTDL() {
-  const selectorListTD = useSelector((data) => data.todolist);
-  console.log("selectorListTD :", selectorListTD);
-  const selectorCount = useSelector((data) => data.count);
   const dispatch = useDispatch();
-
-  const ListDone = selectorListTD.filter((item) => item.checked === true);
-  console.log("ListDone.length:", ListDone.length);
-
-  useEffect(() => {
-    dispatch(addCountDoneAction(ListDone.length));
-    dispatch(addCountResultsAction(selectorListTD.length));
-  }, [ListDone.length, dispatch, selectorListTD.length]);
+  const { todolist: selectorListTD, count: selectorCount } = useSelector(
+    (data) => data
+  );
+  console.log("selectorListTD :", selectorListTD);
 
   function handleDelete(e) {
     dispatch(deleteTodoAction(e.currentTarget.value));
     dispatch(addCountDeleteAction(selectorCount.Delete + 1));
+
+    const itemDeleted = selectorListTD.find(
+      (item) => item.id === parseInt(e.currentTarget.value)
+    );
+
+    if (itemDeleted.checked === true) {
+      dispatch(addCountDoneAction(selectorCount.Done - 1));
+    }
   }
 
   function handleUpdate(e) {
@@ -41,11 +40,14 @@ export default function ListTDL() {
   }
 
   function handleChecked(e) {
-    console.log("handleChecked:", e.target.checked);
+    if (e.target.checked === true) {
+      dispatch(addCountDoneAction(selectorCount.Done + 1));
+    } else {
+      dispatch(addCountDoneAction(selectorCount.Done - 1));
+    }
     dispatch(
       updateCheckedAction({ id: e.target.value, checked: e.target.checked })
     );
-    dispatch(addCountDoneAction(ListDone.length));
   }
 
   return (

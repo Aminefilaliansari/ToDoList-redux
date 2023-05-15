@@ -1,11 +1,9 @@
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import ToDoList from "./pages/ToDoList.jsx";
 import { Provider } from "react-redux";
-import { legacy_createStore } from "redux";
-import reducer from "./redux/reducer";
+import store from "./redux/store";
+import ToDoList from "./pages/ToDoList.jsx";
+import "./index.css";
 
-const store = legacy_createStore(reducer);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

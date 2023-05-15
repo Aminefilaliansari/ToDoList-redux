@@ -17,7 +17,7 @@ function HeaderTDL({ title }) {
 }
 
 HeaderTDL.propTypes = {
-  title: '',
+  title: () => '',
 };
 
 export default HeaderTDL;
